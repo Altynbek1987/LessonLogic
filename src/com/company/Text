@@ -1,0 +1,37 @@
+banknotes ← [1, 3, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000]
+quantities ← [10, 5, 5, 3, 2, 1, 2, 3, 3, 2, 0, 2]
+totalAvailable ← 0
+result ← ''
+
+FOR i ← 1 TO LEN(banknotes) - 1
+    totalAvailable ← totalAvailable + banknotes[i] * quantities[i]
+ENDFOR
+
+withdraw ← USERINPUT # 7060
+remainingAmountToGive ← withdraw
+IF (remainingAmountToGive > totalAvailable)
+THEN
+    OUTPUT 'Вы можете снять только' + totalAvailable
+ELSE
+    FOR i ← LEN(banknotes) - 1 TO 0
+        IF (quantities[i] > 0)
+        THEN
+            quantity ← remainingAmountToGive DIV banknotes[i]
+            IF (quantity > 0)
+            THEN
+                result ← result + quantity + ' X ' + banknotes[i] + ' '
+                quantities[i] - quantity;
+                remainingAmountToGive ← remainingAmountToGive - quantity * banknotes[i]
+                IF(remainingAmountToGive == 0)
+                THEN
+                    BREAK
+                ENDIF
+            ENDIF
+        ENDIF
+    ENDFOR
+IF(remainingAmountToGive == 0)
+THEN
+    OUTPUT 'Вы получили ' + result + '. Всего ' + withdraw
+ENDIF
+
+ENDIF
